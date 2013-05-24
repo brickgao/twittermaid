@@ -1,0 +1,32 @@
+{
+    "name": "Twitter Maid",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "A tools to remind you of the time using on Twitter",
+    "background": {
+        "page": "background.html"
+    },
+    "web_accessible_resources": [
+        "icon.png"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*.twitter.com/*",
+                "https://*.twitter.com/*"
+            ],
+            "js": [
+                "./js/jquery.min.js",
+                "./js/background.js",
+                "./js/popup.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "tabs", "notifications"
+    ],
+    "browser_action": {
+		"default_icon": "icon.png",
+        "default_popup": "popup.html"
+	}
+}
