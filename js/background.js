@@ -1,26 +1,50 @@
-var second = 0;
-var minute = 0;
-var hour = 0;
 var t;
+var t2;
+
+chrome.runtime.onInstalled.addListener(function() {
+        localStorage.date= new Date();
+        localStorage.hour=0;
+        localStorage.minute=0;
+        localStorage.second=0;
+
+        localStorage.lhour=0;
+        localStorage.lminute=1;
+        localStorage.lsecond=0;
+        
+        localStorage.flag=0;
+        });
+
+function checkdate() {
+    if(Date() != localStorage.date()) {
+        localStorage.second = 0;
+        localStorage.minute = 0;
+        localStorage.hour = 0;
+    }
+    t2 = setTimeout(function() {interval();},1000);
+}
 
 function show() {
     var notification = webkitNotifications.createNotification(
-        'icon.png',  // 图标 URL，可以是相对路径
-        'Notice',  // 通知标题
-        '今天浏览Twitter的时间已经到了哦'  // 通知正文文本
+        'icon.png',  // url of icon
+        'Notice',  // title of the notice
+        'Time you used on twitter is over toady >_<'  // the text of notice
     );
     notification.show();
 }
 
 function interval() {
-    second ++;
-    if(second == 60) {
-        second = 0;
-        minute += 1;
+    localStorage.second ++;
+    if(localStorage.second == 60) {
+        localStorage.second = 0;
+        localStorage.minute ++;
     }
-    if(minute == 60) {
-        minute = 0;
-        hour += 1;
+    if(localStorage.minute == 60) {
+        localStorage.minute = 0;
+        localStorage.hour ++;
+    }
+    if(localStorage.flag == 0 && parseInt(localStorage.second) >= parseInt(localStorage.lsecond) && parseInt(localStorage.minute) >= parseInt(localStorage.lminute) && parseInt(localStorage.hour) >= parseInt(localStorage.lhour)) {
+        localStorage.flag = 1;
+        show();
     }
     t = setTimeout(function() {interval();},1000);
 }
@@ -36,7 +60,7 @@ function startTimer() {
 //Check the tab is twitter or not
 function checkByTabid(tabId) { 
 	 chrome.tabs.get(tabId, function(tab) { 
-	 if(tab.url.indexOf("twitter.com") >0) 
+	 if(tab.url.indexOf("twitter.com") > 0) 
 		startTimer(); 
 	 else 
 		stopTimer(); 

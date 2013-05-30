@@ -3,6 +3,9 @@
     "version": "1.0",
     "manifest_version": 2,
     "description": "A tools to remind you of the time using on Twitter",
+    "icons": { 
+        "128": "icon_128.png"
+    },
     "background": {
         "page": "background.html"
     },
@@ -23,7 +26,7 @@
         }
     ],
     "permissions": [
-        "tabs", "notifications"
+        "tabs", "notifications", "management"
     ],
     "browser_action": {
 		"default_icon": "icon.png",
